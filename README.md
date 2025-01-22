@@ -29,7 +29,7 @@ Train the model using:
 ```bash
 python train.py --base_dir <your_base_dir> --batch_size <your_batch_size_per_gpu> # 32 in total is recommended
 ```
-We have incorporated several additional loss terms into the diffusion network's training objective, as proposed in the paper below, resulting in further performance enhancements. When evaluated on the VBD dataset, this fine-tuned system achieves a PESQ score of 3.40 and SI-SNR values exceeding 20dB.
+We have incorporated several additional loss terms into the diffusion network's training objective, as proposed in the paper below, resulting in further performance enhancements. When evaluated on the VBD dataset, this achieves a PESQ score over 3.3 and SI-SNR values exceeding 19.5dB.
 
 ```bibtex
 @article{richter2024investigating,
@@ -40,14 +40,13 @@ We have incorporated several additional loss terms into the diffusion network's 
 }
 ```
 
-If you choose not to use the additional loss terms, we recommend first training for approximately 700 epochs with default parameters, then performing fine-tuning with the following configuration for 10~30 epochs to reproduce the final results:
+If you choose not to use the additional loss terms to reproduce the results, we recommend first training for approximately 700 epochs with default parameters, then performing fine-tuning with the following configuration for 10~30 epochs. When this fine-tuning process is combined with the additional loss terms, it will achieve better performance (PESQ 3.40, SI-SNR 20.02dB on VBD Testset).
 
 ```bash
 python train.py --base_dir <your_base_dir> --spec_exp_exponent 0.76 --spec_factor 0.15 --kappa 0.1 --power 0.39 --min_noise_level 0.006 --batch_size <your_batch_size> --finetuned --resume_from_checkpoint <your_checkpoint_path>
 ```
 
 Note: During fine-tuning, we modify the noise generation formula from `noise = torch.randn_like(x) * mask` to `noise = torch.randn_like(x) * torch.sqrt(mask)`(i.e. making the noise more "challenging"). Note that this modification only affects the fine-tuning phase and does not require changes to the inference process.
-
 
 Your base directory should contain:
 - `train/` - Training data directory
