@@ -118,7 +118,7 @@ class GaldSE(pl.LightningModule):
         return loss
 
     def _step(self, batch, batch_idx):
-        x_, y_, _, _ = batch
+        x_, y_ = batch
 
         x = torch.cat([x_.real, x_.imag], dim=1)
         y = torch.cat([y_.real, y_.imag], dim=1)

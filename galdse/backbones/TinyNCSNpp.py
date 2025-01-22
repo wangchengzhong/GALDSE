@@ -197,7 +197,8 @@ class TinyNCSNpp(nn.Module):
 
 
         modules.append(ResnetBlock(in_ch=in_ch))
-
+        modules.append(AttnBlock(channels=in_ch))
+        modules.append(ResnetBlock(in_ch=in_ch))
 
         pyramid_ch = 0
         

@@ -30,9 +30,6 @@ if __name__ == '__main__':
           parser_.add_argument("--backbone", type=str, choices=BackboneRegistry.get_all_names(), default="TinyNCSNpp")
           parser_.add_argument("--frontend", type=str, choices=FrontendRegistry.get_all_names(), default="MagMask")
           parser_.add_argument("--sto_process", type=str, choices=StoProcessRegistry.get_all_names(), default="RESSHIFT")
-          parser_.add_argument("--resume_from_checkpoint", type=str, default=None, help="Path to checkpoint to resume from")
-          parser_.add_argument("--check_interval", type=int, default=6, help="validation interval")
-
 
           
      temp_args, _ = base_parser.parse_known_args()
@@ -95,7 +92,7 @@ if __name__ == '__main__':
           log_every_n_steps=30, num_sanity_val_steps=0,
           callbacks=callbacks,accelerator='gpu',# devices=[0, 1],
           resume_from_checkpoint=args.resume_from_checkpoint,
-          check_val_every_n_epoch=args.check_interval,
+          check_val_every_n_epoch=args.check_val_every_n_epoch,
           max_epochs=15000,
           # val_check_interval=3000
      )
